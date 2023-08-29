@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
 import pet.com.jetpetrescue.components.PetInfoItem
+import pet.com.jetpetrescue.home.Home
 
 
 class MainActivity : ComponentActivity() {
@@ -22,33 +23,12 @@ class MainActivity : ComponentActivity() {
             JetPetTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    contentColor = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.background
                 ) {
-                    PetInfoItem()
+                    Home()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(
-    name = "Light mode",
-    showBackground = true
-)
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true, name = "Dark Mode"
-)
-@Composable
-private fun AppPreview() {
-    JetPetTheme {
-        Surface {
-            Greeting("ANDROID")
-        }
-    }
-}
