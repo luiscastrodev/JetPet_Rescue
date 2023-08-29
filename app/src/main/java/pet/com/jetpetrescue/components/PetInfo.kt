@@ -33,7 +33,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import hoods.com.jetpetrescue.R
 import hoods.com.jetpetrescue.data.DummyPetDataSource
-import hoods.com.jetpetrescue.data.model.Owner
 import hoods.com.jetpetrescue.data.model.Pet
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
 
@@ -42,13 +41,14 @@ fun PetInfoItem(
     pet: Pet,
     onPetItemClick: (Pet) -> Unit
 ) {
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = {}),
+            .clickable(onClick = {
+                onPetItemClick.invoke(pet)
+            }),
         elevation = 2.dp,
         backgroundColor = MaterialTheme.colors.surface
     ) {

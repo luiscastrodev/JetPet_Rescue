@@ -40,7 +40,7 @@ object DummyPetDataSource {
             owner = owner[1]
         ),
         Pet(
-            id = 0,
+            id = 1,
             name = "Julk",
             age = "Adult",
             gender =  "Male",
@@ -52,7 +52,7 @@ object DummyPetDataSource {
             owner = owner[2]
         ),
         Pet(
-            id = 0,
+            id = 2,
             name = "Julk",
             age = "Adult",
             gender =  "Male",
@@ -64,7 +64,7 @@ object DummyPetDataSource {
             owner = owner[3]
         ),
         Pet(
-            id = 0,
+            id = 3,
             name = "Julk",
             age = "Adult",
             gender =  "Male",
