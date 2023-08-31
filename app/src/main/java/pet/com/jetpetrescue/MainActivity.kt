@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
+import pet.com.jetpetrescue.detail.DetailScreen
 import pet.com.jetpetrescue.home.Home
 
 

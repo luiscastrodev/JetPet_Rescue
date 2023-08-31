@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Button
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentAlpha
@@ -92,11 +93,33 @@ fun DetailScreen(
             item {
                 PetInfo(pet = pet)
             }
-            item{
+            item {
                 OwnerCardInfo(owner = pet.owner)
+            }
+            item {
+                PetButton() {
+
+                }
             }
         }
     }
+}
+
+@Composable
+fun PetButton(onClick: () -> Unit) {
+    Spacer(modifier = Modifier.height(36.dp))
+
+    Button(
+        onClick = {
+            onClick()
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Text(text = "Adopt Me")
+    }
+    Spacer(modifier = Modifier.height(24.dp))
 }
 
 @Composable
@@ -110,15 +133,21 @@ fun PetInfo(pet: Pet) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            InfoCard(primaryText = pet.age, secondaryText = "Age", modifier = Modifier
-                .weight(1f)
-                .padding(4.dp))
-            InfoCard(primaryText = pet.color, secondaryText = "color", modifier = Modifier
-                .weight(1f)
-                .padding(4.dp))
-            InfoCard(primaryText = pet.breed, secondaryText = "Breed", modifier = Modifier
-                .weight(1f)
-                .padding(4.dp))
+            InfoCard(
+                primaryText = pet.age, secondaryText = "Age", modifier = Modifier
+                    .weight(1f)
+                    .padding(4.dp)
+            )
+            InfoCard(
+                primaryText = pet.color, secondaryText = "color", modifier = Modifier
+                    .weight(1f)
+                    .padding(4.dp)
+            )
+            InfoCard(
+                primaryText = pet.breed, secondaryText = "Breed", modifier = Modifier
+                    .weight(1f)
+                    .padding(4.dp)
+            )
 
         }
     }
