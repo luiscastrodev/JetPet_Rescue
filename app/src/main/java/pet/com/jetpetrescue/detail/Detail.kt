@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import hoods.com.jetpetrescue.data.DummyPetDataSource
 import hoods.com.jetpetrescue.data.model.Pet
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
+import pet.com.jetpetrescue.components.OwnerCardInfo
 import pet.com.jetpetrescue.components.PetBasicInfo
 import pet.com.jetpetrescue.components.PetInfoItem
 
@@ -91,6 +92,9 @@ fun DetailScreen(
             item {
                 PetInfo(pet = pet)
             }
+            item{
+                OwnerCardInfo(owner = pet.owner)
+            }
         }
     }
 }
@@ -106,9 +110,15 @@ fun PetInfo(pet: Pet) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            InfoCard(primaryText = pet.age, secondaryText = "Age", modifier = Modifier.weight(1f).padding(4.dp))
-            InfoCard(primaryText = pet.color, secondaryText = "color", modifier = Modifier.weight(1f).padding(4.dp))
-            InfoCard(primaryText = pet.breed, secondaryText = "Breed", modifier = Modifier.weight(1f).padding(4.dp))
+            InfoCard(primaryText = pet.age, secondaryText = "Age", modifier = Modifier
+                .weight(1f)
+                .padding(4.dp))
+            InfoCard(primaryText = pet.color, secondaryText = "color", modifier = Modifier
+                .weight(1f)
+                .padding(4.dp))
+            InfoCard(primaryText = pet.breed, secondaryText = "Breed", modifier = Modifier
+                .weight(1f)
+                .padding(4.dp))
 
         }
     }
