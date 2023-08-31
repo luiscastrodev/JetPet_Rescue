@@ -29,7 +29,13 @@ class MainActivity : ComponentActivity() {
                 mutableStateOf(-1)
             }
 
-            JetPetTheme {
+            var isDarkTheme by remember {
+                mutableStateOf(false)
+            }
+
+            JetPetTheme(
+                darkTheme = isDarkTheme
+            ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -43,7 +49,7 @@ class MainActivity : ComponentActivity() {
                                     currentScreen = Screen.Detail
                                 },
                                 onSwitchClick = {
-
+                                    isDarkTheme = !isDarkTheme
                                 }
                             )
                         }
