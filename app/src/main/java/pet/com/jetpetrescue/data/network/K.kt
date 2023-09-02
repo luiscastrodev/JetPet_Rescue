@@ -9,4 +9,5 @@ object K {
     const val SECRET_KEY = "AYRXtsjXm2TtYS0l8v6nDgzgi0mBQZMF0c08dbixSB"
     const val CLIENT_ID = "client_id"
     const val  CLIENT_SECRET = "client_secret"
+    const val USER_TOKEN = "user_token"
 }
