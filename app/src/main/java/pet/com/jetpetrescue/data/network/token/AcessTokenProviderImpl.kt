@@ -1,4 +1,4 @@
-package pet.com.jetpetrescue.token
+package pet.com.jetpetrescue.data.network.token
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
