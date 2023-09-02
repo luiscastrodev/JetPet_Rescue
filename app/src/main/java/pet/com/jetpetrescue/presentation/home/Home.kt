@@ -1,4 +1,4 @@
-package pet.com.jetpetrescue.home
+package pet.com.jetpetrescue.presentation.home
 
 import android.content.res.Configuration
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,8 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import hoods.com.jetpetrescue.data.DummyPetDataSource
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
-import pet.com.jetpetrescue.components.PetInfoItem
-import pet.com.jetpetrescue.components.TopBar
+import pet.com.jetpetrescue.presentation.components.PetInfoItem
+import pet.com.jetpetrescue.presentation.components.TopBar
 
 @Composable
 fun Home(

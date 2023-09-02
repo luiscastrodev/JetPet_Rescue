@@ -12,8 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
-import pet.com.jetpetrescue.detail.DetailScreen
-import pet.com.jetpetrescue.home.Home
+import pet.com.jetpetrescue.presentation.detail.DetailScreen
+import pet.com.jetpetrescue.presentation.home.Home
 
 
 class MainActivity : ComponentActivity() {

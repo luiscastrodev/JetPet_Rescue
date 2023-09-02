@@ -1,4 +1,4 @@
-package pet.com.jetpetrescue.detail
+package pet.com.jetpetrescue.presentation.detail
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -37,9 +37,9 @@ import androidx.compose.ui.unit.dp
 import hoods.com.jetpetrescue.data.DummyPetDataSource
 import hoods.com.jetpetrescue.data.model.Pet
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
-import pet.com.jetpetrescue.components.OwnerCardInfo
-import pet.com.jetpetrescue.components.PetBasicInfo
-import pet.com.jetpetrescue.components.PetInfoItem
+import pet.com.jetpetrescue.presentation.components.OwnerCardInfo
+import pet.com.jetpetrescue.presentation.components.PetBasicInfo
+import pet.com.jetpetrescue.presentation.components.PetInfoItem
 
 @Composable
 fun DetailScreen(

@@ -1,4 +1,4 @@
-package pet.com.jetpetrescue.components
+package pet.com.jetpetrescue.presentation.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
