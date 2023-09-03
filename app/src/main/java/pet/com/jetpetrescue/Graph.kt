@@ -25,7 +25,7 @@ object Graph {
     private lateinit var tokenStoragePref: StoragePref
     private lateinit var apiService: PetFinderApiService
     private lateinit var acessTokenProvider: AcessTokenProvider
-    private lateinit var petRepository: PetRepository
+    lateinit var petRepository: PetRepository
     private val apiMapper = PetApiMapperImpl()
 
     private val okHttpClient: OkHttpClient by lazy {
