@@ -5,6 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import pet.com.jetpetrescue.Graph
 import pet.com.jetpetrescue.domain.models.Pet
 import pet.com.jetpetrescue.domain.paginator.LoadingStateListener
@@ -17,15 +19,11 @@ class MainViewModel(
 ) : ViewModel(), LoadingStateListener<ResourceHolder<List<Pet>>> {
 
     override fun onLoadingStatechanged(isLoading: Boolean) {
-        uiState = uiState.copy(
-            isFetchingPet = isLoading
-        )
+        uiState = uiState.copy(isFetchingPet = isLoading)
     }
 
     override fun onDataFeched(data: ResourceHolder<List<Pet>>) {
-        uiState = uiState.copy(
-            animal = data
-        )
+        uiState = uiState.updateAnimal(data)
     }
 
     override fun onError(error: Throwable) {
@@ -37,11 +35,13 @@ class MainViewModel(
             is ResourceHolder.Error -> {
                 copy(animal = newData)
             }
+
             is ResourceHolder.Success -> {
                 val updateData = this.animal.data?.combineData(newData.data!!) ?: newData
                 copy(animal = updateData)
             }
-            else ->{
+
+            else -> {
                 this
             }
         }
@@ -57,6 +57,10 @@ class MainViewModel(
         const val TAG = "MainViewModel"
     }
 
+    init {
+        loadingNexPage()
+    }
+
     private val petPaginator = PetPaginatorImpl(
         initialKey = getPage(uiState.animal.data),
         loadingState = this,
@@ -69,6 +73,12 @@ class MainViewModel(
             getPage(resourceHolder.data)
         }
     )
+
+    fun loadingNexPage(){
+        viewModelScope.launch {
+            petPaginator.fetchNextPage()
+        }
+    }
 
     private suspend fun fechAnimals(page: Int): ResourceHolder<List<Pet>> {
         return repository.getAnimal(page)
