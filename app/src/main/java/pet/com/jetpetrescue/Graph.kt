@@ -22,11 +22,11 @@ private val json = Json { ignoreUnknownKeys = true }
 
 object Graph {
 
-    lateinit var tokenStoragePref: StoragePref
-    lateinit var apiService: PetFinderApiService
-    lateinit var acessTokenProvider: AcessTokenProvider
-    lateinit var petRepository: PetRepository
-    val apiMapper = PetApiMapperImpl()
+    private lateinit var tokenStoragePref: StoragePref
+    private lateinit var apiService: PetFinderApiService
+    private lateinit var acessTokenProvider: AcessTokenProvider
+    private lateinit var petRepository: PetRepository
+    private val apiMapper = PetApiMapperImpl()
 
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
