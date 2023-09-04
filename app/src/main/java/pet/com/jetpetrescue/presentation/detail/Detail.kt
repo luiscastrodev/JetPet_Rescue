@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentAlpha
@@ -25,26 +27,29 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import hoods.com.jetpetrescue.data.DummyPetDataSource
-import hoods.com.jetpetrescue.data.model.Pet
+import coil.compose.AsyncImage
+import hoods.com.jetpetrescue.R
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
-import pet.com.jetpetrescue.presentation.components.OwnerCardInfo
+import pet.com.jetpetrescue.domain.models.Pet
 import pet.com.jetpetrescue.presentation.components.PetBasicInfo
-import pet.com.jetpetrescue.presentation.components.PetInfoItem
 
 @Composable
 fun DetailScreen(
-    index: Int,
-    onNavigate: () -> Unit
+    onNavigate: () -> Unit,
+    pet: Pet
 ) {
     Scaffold(
         topBar = {
@@ -71,20 +76,40 @@ fun DetailScreen(
             )
         }
     ) { paddingValues ->
-        val pet = DummyPetDataSource.dogList[index]
+        var isLoading: Boolean by remember {
+            mutableStateOf(false)
+        }
         LazyColumn(contentPadding = paddingValues) {
             item {
-                Image(
-                    painter = painterResource(id = pet.image),
-                    contentDescription = null,
+                if (isLoading) {
+                    CircularProgressIndicator()
+                }
+
+                AsyncImage(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(346.dp),
+                        .height(300.dp)
+                        //.clip(RoundedCornerShape(16.dp))
+                    ,
+                    model = if (pet.photos.isNotEmpty()) pet.photos[0].full
+                    else null,
+                    placeholder = painterResource(id = R.drawable.placeholder_ic),
+                    error = painterResource(id = R.drawable.placeholder_ic),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
                     alignment = Alignment.CenterStart,
-                    contentScale = ContentScale.Crop
+                    onLoading = {
+                        isLoading = true
+                    },
+                    onError = {
+                        it.result.throwable.printStackTrace()
+                    },
+                    onSuccess = {
+                        isLoading = false
+                    }
                 )
 
-                PetBasicInfo(pet.name, pet.location, pet.breed)
+                PetBasicInfo(pet.name, pet.distance, pet.breeds)
             }
             item {
                 MyStoryItem(pet)
@@ -93,9 +118,9 @@ fun DetailScreen(
             item {
                 PetInfo(pet = pet)
             }
-            item {
-                OwnerCardInfo(owner = pet.owner)
-            }
+            // item {
+            //    OwnerCardInfo(owner = pet.owner)
+            //}
             item {
                 PetButton() {
 
@@ -139,12 +164,12 @@ fun PetInfo(pet: Pet) {
                     .padding(4.dp)
             )
             InfoCard(
-                primaryText = pet.color, secondaryText = "color", modifier = Modifier
+                primaryText = pet.colors, secondaryText = "color", modifier = Modifier
                     .weight(1f)
                     .padding(4.dp)
             )
             InfoCard(
-                primaryText = pet.breed, secondaryText = "Breed", modifier = Modifier
+                primaryText = pet.colors, secondaryText = "Breed", modifier = Modifier
                     .weight(1f)
                     .padding(4.dp)
             )
@@ -157,7 +182,7 @@ fun PetInfo(pet: Pet) {
 fun InfoCard(
     modifier: Modifier = Modifier,
     primaryText: String,
-    secondaryText: String
+    secondaryText: String,
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
@@ -236,7 +261,6 @@ fun Title(
 private fun HomePreview() {
     JetPetTheme {
         Surface {
-            DetailScreen(index = 0) {}
         }
     }
 }

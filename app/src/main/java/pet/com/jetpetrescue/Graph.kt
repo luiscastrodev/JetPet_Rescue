@@ -18,15 +18,18 @@ import pet.com.jetpetrescue.data.repository.PetRepositoryImpl
 import pet.com.jetpetrescue.domain.repository.PetRepository
 import retrofit2.Retrofit
 
-private val json = Json { ignoreUnknownKeys = true }
+private val json = Json {
+    ignoreUnknownKeys = true
+    coerceInputValues = true
+}
 
 object Graph {
 
-    private lateinit var tokenStoragePref: StoragePref
-    private lateinit var apiService: PetFinderApiService
-    private lateinit var acessTokenProvider: AcessTokenProvider
+    lateinit var tokenStoragePref: StoragePref
+    lateinit var apiService: PetFinderApiService
+    lateinit var acessTokenProvider: AcessTokenProvider
     lateinit var petRepository: PetRepository
-    private val apiMapper = PetApiMapperImpl()
+    val apiMapper = PetApiMapperImpl()
 
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()

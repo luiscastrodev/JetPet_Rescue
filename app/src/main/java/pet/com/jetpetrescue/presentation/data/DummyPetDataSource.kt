@@ -4,6 +4,7 @@ import hoods.com.jetpetrescue.R
 import hoods.com.jetpetrescue.data.model.Owner
 import hoods.com.jetpetrescue.data.model.Pet
 
+@Deprecated("MOCK DATA")
 object DummyPetDataSource {
 
     private val owner = listOf(

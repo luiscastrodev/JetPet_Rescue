@@ -27,6 +27,6 @@ interface PetFinderApiService {
     suspend fun getAuthToken(
         @Field(CLIENT_ID) clientId: String = API_KEY,
         @Field(CLIENT_SECRET) clientSecret: String = SECRET_KEY,
-        @Field("grant_type") grantType: String = "client_Credencials"
+        @Field("grant_type") grantType: String = "client_credentials"
     ): AccessToken
 }

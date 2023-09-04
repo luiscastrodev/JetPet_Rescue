@@ -57,24 +57,26 @@ class MainViewModel(
         const val TAG = "MainViewModel"
     }
 
+    private var petPaginator: PetPaginatorImpl<Int, ResourceHolder<List<Pet>>>
+
     init {
+        petPaginator = PetPaginatorImpl(
+            initialKey = getPage(uiState.animal.data),
+            loadingState = this,
+            onRequest = { page ->
+                if (uiState.isFetchingPet) return@PetPaginatorImpl ResourceHolder.Loading()
+                val pet = fechAnimals(page)
+                pet
+            },
+            getNextPage = { resourceHolder ->
+                getPage(resourceHolder.data)
+            }
+        )
         loadingNexPage()
     }
 
-    private val petPaginator = PetPaginatorImpl(
-        initialKey = getPage(uiState.animal.data),
-        loadingState = this,
-        onRequest = { page ->
-            if (uiState.isFetchingPet) return@PetPaginatorImpl ResourceHolder.Loading()
-            val pet = fechAnimals(page)
-            pet
-        },
-        getNextPage = { resourceHolder ->
-            getPage(resourceHolder.data)
-        }
-    )
 
-    fun loadingNexPage(){
+    fun loadingNexPage() {
         viewModelScope.launch {
             petPaginator.fetchNextPage()
         }
@@ -84,8 +86,15 @@ class MainViewModel(
         return repository.getAnimal(page)
     }
 
+    fun onInfiniteScollchange(start: Boolean) {
+        uiState = uiState.copy(
+            startInfiniteScrolling = start,
+            loadingMoreButtonVisible = !start
+        )
+    }
+
     private fun getPage(pageSource: List<Pet>?): Int {
-        return if (pageSource?.isEmpty() == true) {
+        return if (pageSource?.isNotEmpty() == true) {
             pageSource[pageSource.lastIndex].currentPage + 1
         } else {
             1
