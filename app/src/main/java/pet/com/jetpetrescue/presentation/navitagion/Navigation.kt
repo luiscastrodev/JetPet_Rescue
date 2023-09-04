@@ -2,8 +2,10 @@ package pet.com.jetpetrescue.presentation.navitagion
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import pet.com.jetpetrescue.presentation.detail.DetailScreen
 import pet.com.jetpetrescue.presentation.home.Home
 import pet.com.jetpetrescue.presentation.viewmodels.UiState
@@ -26,18 +28,30 @@ fun JetPetNavigation(
                 onLoadNextPage = onLoadNexPage,
                 onInfinitScollingChange = onInfiniteScrollChange,
                 uiState = uiState,
-                onPetClick = { seledtedId ->
-                    navController.navigate(route = Screen.Detail.name)
+                onPetClick = { index ->
+                    navController.navigate(route = "${Screen.Detail.name}/${index}")
                 },
                 onSwitchClick = onThemeChange
             )
         }
 
-        composable(route = Screen.Detail.name) {
+        composable(
+            route = "${Screen.Detail.name}/{id}",
+            arguments = listOf(navArgument("id")
+            {
+                type = NavType.IntType
+                defaultValue = 0
+            })
+        ) { backstackEntry ->
+            val id = backstackEntry.arguments!!.getInt("id")
             DetailScreen(
-                pet = uiState.animal.data?.get(0)!!
+                pet = uiState.animal.data?.get(id)!!
             ) {
-                navController.navigate(Screen.Home.name)
+                navController.navigate(Screen.Home.name){
+                    popUpTo(route = Screen.Home.name){
+                        inclusive = true
+                    }
+                }
             }
         }
     }
