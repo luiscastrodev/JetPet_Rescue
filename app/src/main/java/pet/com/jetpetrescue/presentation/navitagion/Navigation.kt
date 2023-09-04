@@ -47,11 +47,12 @@ fun JetPetNavigation(
             DetailScreen(
                 pet = uiState.animal.data?.get(id)!!
             ) {
-                navController.navigate(Screen.Home.name){
-                    popUpTo(route = Screen.Home.name){
-                        inclusive = true
-                    }
-                }
+//                navController.navigate(Screen.Home.name){
+//                    popUpTo(route = Screen.Home.name){
+//                        inclusive = true
+//                    }
+//                }
+                navController.navigateUp()
             }
         }
     }
