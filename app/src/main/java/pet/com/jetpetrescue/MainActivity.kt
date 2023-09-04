@@ -12,9 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import hoods.com.jetpetrescue.ui.theme.JetPetTheme
 import pet.com.jetpetrescue.presentation.detail.DetailScreen
 import pet.com.jetpetrescue.presentation.home.Home
+import pet.com.jetpetrescue.presentation.navitagion.JetPetNavigation
 import pet.com.jetpetrescue.presentation.viewmodels.MainViewModel
 
 
@@ -23,23 +25,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            var currentScreen by remember {
-                mutableStateOf(Screen.Home)
-            }
-
-            var seletedIndex by remember {
-                mutableStateOf(-1)
-            }
-
             var isDarkTheme by remember {
                 mutableStateOf(false)
             }
 
             val viewModel = viewModel(modelClass = MainViewModel::class.java)
 
-            var id by remember {
-                mutableStateOf(-1)
-            }
+            var navController = rememberNavController()
 
             JetPetTheme(
                 darkTheme = isDarkTheme
@@ -49,44 +41,21 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
 
-                    when (currentScreen) {
-                        Screen.Home -> {
-                            Home(
-                                onLoadNextPage = {
-                                    viewModel.loadingNexPage()
-                                },
-                                onInfinitScollingChange = {
-                                    viewModel.onInfiniteScollchange(it)
-                                },
-                                uiState = viewModel.uiState,
-                                onPetClick = { index ->
-                                    seletedIndex = index
-                                    currentScreen = Screen.Detail
-                                },
-                                onSwitchClick = {
-                                    isDarkTheme = !isDarkTheme
-                                }
-                            )
+                    JetPetNavigation(
+                        navController = navController,
+                        uiState = viewModel.uiState,
+                        onThemeChange = {
+                            isDarkTheme = !isDarkTheme
+                        },
+                        onLoadNexPage = {
+                            viewModel.loadingNexPage()
+                        },
+                        onInfiniteScrollChange = {
+                            viewModel.onInfiniteScollchange(it)
                         }
-
-                        Screen.Detail -> {
-
-                            DetailScreen(
-                                onNavigate = { currentScreen = Screen.Home },
-                                pet = viewModel.uiState.animal.data?.get(seletedIndex)!!
-                            )
-
-                        }
-
-                    }
-
+                    )
                 }
             }
         }
     }
-}
-
-enum class Screen {
-    Home,
-    Detail
 }

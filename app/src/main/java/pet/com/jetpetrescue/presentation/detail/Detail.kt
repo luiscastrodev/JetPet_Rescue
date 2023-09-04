@@ -48,8 +48,8 @@ import pet.com.jetpetrescue.presentation.components.PetBasicInfo
 
 @Composable
 fun DetailScreen(
-    onNavigate: () -> Unit,
-    pet: Pet
+    pet: Pet,
+    onNavigate: () -> Unit
 ) {
     Scaffold(
         topBar = {
