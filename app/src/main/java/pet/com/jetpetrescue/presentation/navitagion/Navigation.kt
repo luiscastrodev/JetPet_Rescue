@@ -26,8 +26,8 @@ fun JetPetNavigation(
                 onLoadNextPage = onLoadNexPage,
                 onInfinitScollingChange = onInfiniteScrollChange,
                 uiState = uiState,
-                onPetClick = { index ->
-
+                onPetClick = { seledtedId ->
+                    navController.navigate(route = Screen.Detail.name)
                 },
                 onSwitchClick = onThemeChange
             )
@@ -36,8 +36,8 @@ fun JetPetNavigation(
         composable(route = Screen.Detail.name) {
             DetailScreen(
                 pet = uiState.animal.data?.get(0)!!
-            ){
-
+            ) {
+                navController.navigate(Screen.Home.name)
             }
         }
     }
